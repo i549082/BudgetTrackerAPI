@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
 public class PersonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "username", nullable = false, unique = true, length = 50)
     private String username;
@@ -28,6 +29,9 @@ public class PersonEntity {
 
     @Column(name = "passwordHash", nullable = false, length = 255)
     private String hashedPassword;
+
+    @Column(name = "balance", nullable = false, precision = 19, scale = 2)
+    private BigDecimal balance;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TransactionEntity> transactions = new ArrayList<>();

@@ -6,7 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
@@ -20,7 +22,7 @@ import java.sql.Timestamp;
 public class TransactionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", nullable = false)
@@ -34,8 +36,9 @@ public class TransactionEntity {
     private String description;
 
     @Column(name = "amount", nullable = false, precision = 19, scale = 2)
-    private double amount;
+    private BigDecimal amount;
 
+    @CreationTimestamp
     @Column(name = "dateCreated")
     private Timestamp dateCreated;
 }
