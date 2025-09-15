@@ -34,5 +34,5 @@ public class PersonEntity {
     private BigDecimal balance;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<TransactionEntity> transactions = new ArrayList<>();
+    private List<MoneyTransactionEntity> transactions = new ArrayList<>();
 }

@@ -1,5 +1,6 @@
 package com.BudgetTracker.BudgetTrackerAPI.DataAccess.Entities;
 
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.AccountType;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.TransactionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 
 
-public class TransactionEntity {
+public class MoneyTransactionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,6 +32,10 @@ public class TransactionEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     private TransactionType transactionType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "account", nullable = false)
+    private AccountType accountType;
 
     @Column(name = "description", length = 255)
     private String description;

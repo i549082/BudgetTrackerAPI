@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Person {
-    private int  id;
+    private Long  id;
     private String username;
     private String email;
     @Setter(AccessLevel.NONE)

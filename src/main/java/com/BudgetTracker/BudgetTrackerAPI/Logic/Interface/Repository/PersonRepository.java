@@ -8,7 +8,6 @@ import javax.swing.text.html.Option;
 import java.util.Optional;
 
 public interface PersonRepository extends JpaRepository<PersonEntity, Long> {
-
     Optional<PersonEntity> findByUsername(String username);
     Optional <PersonEntity> findByEmail(String email);
     boolean existsByUsername(String username);

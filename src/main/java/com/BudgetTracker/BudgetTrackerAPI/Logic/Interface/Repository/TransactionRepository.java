@@ -1,7 +1,10 @@
 package com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository;
 
-import com.BudgetTracker.BudgetTrackerAPI.DataAccess.Entities.TransactionEntity;
+import com.BudgetTracker.BudgetTrackerAPI.DataAccess.Entities.MoneyTransactionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TransactionRepository extends JpaRepository<TransactionEntity, Long> {
+import java.util.Optional;
+
+public interface TransactionRepository extends JpaRepository<MoneyTransactionEntity, Long> {
+    Optional<MoneyTransactionEntity> findByDescription(String description);
 }
