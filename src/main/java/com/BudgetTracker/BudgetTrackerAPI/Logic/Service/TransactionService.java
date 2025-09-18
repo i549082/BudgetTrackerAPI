@@ -1,6 +1,7 @@
 package com.BudgetTracker.BudgetTrackerAPI.Logic.Service;
 
 import com.BudgetTracker.BudgetTrackerAPI.DataAccess.Entities.MoneyTransactionEntity;
+import com.BudgetTracker.BudgetTrackerAPI.DataAccess.Entities.PersonEntity;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.AccountType;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.TransactionType;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonRepository;
@@ -25,21 +26,20 @@ public class TransactionService {
     }
 
     public MoneyTransaction GetTransactionById (Long id) {
-        var transactionEntity = transactionRepository.findById(id)
+        MoneyTransactionEntity transactionEntity = transactionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Transaction not found with id " + id));
-        return  mapToTransactionModel(new MoneyTransactionEntity());
+        return  mapToTransactionModel(transactionEntity);
     }
 
     public MoneyTransaction GetTransactionByDescription(String description){
-        var transactionEntity = transactionRepository.findByDescription(description)
+        MoneyTransactionEntity transactionEntity = transactionRepository.findByDescription(description)
                 .orElseThrow(() -> new EntityNotFoundException("Transaction not found with description " + description));
-        return  mapToTransactionModel(new MoneyTransactionEntity());
+        return  mapToTransactionModel(transactionEntity);
     }
 
     public void AddTransaction(Long userId, BigDecimal amount, String description, TransactionType transactionType, AccountType accountType){
-        var person = personRepository.findById(userId)
+        PersonEntity person = personRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("cannot find user with id:" + userId));
-
 
         MoneyTransactionEntity moneyTransactionEntity = new MoneyTransactionEntity();
         moneyTransactionEntity.setAmount(amount);

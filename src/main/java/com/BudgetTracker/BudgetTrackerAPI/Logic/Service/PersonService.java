@@ -20,7 +20,7 @@ public class PersonService { // TO DO: Add Exception Handling
     }
 
     public Person GetPersonById (Long id ) {
-       var personEntity = personRepository.findById( id )
+        PersonEntity personEntity = personRepository.findById( id )
                .orElseThrow(() -> new EntityNotFoundException("User not found with id " + id));
 
         return mapToPersonModel( personEntity );
@@ -28,15 +28,15 @@ public class PersonService { // TO DO: Add Exception Handling
     }
 
     public Person GetPersonByUsername ( String username ){
-        var personEntity =  personRepository.findByUsername(username)
+        PersonEntity personEntity =  personRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with username " + username));
             return mapToPersonModel( personEntity );
     }
 
     public Person GetPersonByEmail ( String email ){
-        var personEntity = personRepository.findByEmail(email)
+        PersonEntity personEntity = personRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with email " + email));
-        return mapToPersonModel( new PersonEntity());
+        return mapToPersonModel( personEntity);
     }
 
     public boolean PersonExistsByUsername ( String username ){
