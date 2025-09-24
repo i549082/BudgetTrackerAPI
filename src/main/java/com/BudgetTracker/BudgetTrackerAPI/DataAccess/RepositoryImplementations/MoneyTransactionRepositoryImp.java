@@ -1,44 +1,47 @@
-package com.BudgetTracker.BudgetTrackerAPI.Logic.Service;
+package com.BudgetTracker.BudgetTrackerAPI.DataAccess.RepositoryImplementations;
 
 import com.BudgetTracker.BudgetTrackerAPI.DataAccess.Entities.MoneyTransactionEntity;
 import com.BudgetTracker.BudgetTrackerAPI.DataAccess.Entities.PersonEntity;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.AccountType;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.TransactionType;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonRepository;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.TransactionRepository;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.MoneyTransactionRepository;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonJpaRepository;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.TransactionJpaRepository;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.MoneyTransaction;
 import jakarta.persistence.EntityNotFoundException;
-import org.aspectj.weaver.ast.Var;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
 @Service
-public class TransactionService {
+public class MoneyTransactionRepositoryImp implements MoneyTransactionRepository {
 
-    private final TransactionRepository transactionRepository;
-    private final PersonRepository personRepository;
+    private final TransactionJpaRepository transactionJpaRepository;
+    private final PersonJpaRepository personJpaRepository;
 
 
-    public TransactionService(TransactionRepository transactionRepository, PersonRepository personRepository) {
-        this.transactionRepository = transactionRepository;
-        this.personRepository = personRepository;
+    public MoneyTransactionRepositoryImp(TransactionJpaRepository transactionJpaRepository, PersonJpaRepository personJpaRepository) {
+        this.transactionJpaRepository = transactionJpaRepository;
+        this.personJpaRepository = personJpaRepository;
     }
 
+    @Override
     public MoneyTransaction GetTransactionById (Long id) {
-        MoneyTransactionEntity transactionEntity = transactionRepository.findById(id)
+        MoneyTransactionEntity transactionEntity = transactionJpaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Transaction not found with id " + id));
-        return  mapToTransactionModel(transactionEntity);
+        return  MapToTransactionModel(transactionEntity);
     }
 
+    @Override
     public MoneyTransaction GetTransactionByDescription(String description){
-        MoneyTransactionEntity transactionEntity = transactionRepository.findByDescription(description)
+        MoneyTransactionEntity transactionEntity = transactionJpaRepository.findByDescription(description)
                 .orElseThrow(() -> new EntityNotFoundException("Transaction not found with description " + description));
-        return  mapToTransactionModel(transactionEntity);
+        return  MapToTransactionModel(transactionEntity);
     }
 
-    public void AddTransaction(Long userId, BigDecimal amount, String description, TransactionType transactionType, AccountType accountType){
-        PersonEntity person = personRepository.findById(userId)
+    @Override
+    public void SaveTransaction(Long userId, BigDecimal amount, String description, TransactionType transactionType, AccountType accountType){
+        PersonEntity person = personJpaRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("cannot find user with id:" + userId));
 
         MoneyTransactionEntity moneyTransactionEntity = new MoneyTransactionEntity();
@@ -47,10 +50,10 @@ public class TransactionService {
         moneyTransactionEntity.setTransactionType(transactionType);
         moneyTransactionEntity.setAccountType(accountType);
         moneyTransactionEntity.setPersonId(person);
-        transactionRepository.save(moneyTransactionEntity);
+        transactionJpaRepository.save(moneyTransactionEntity);
     }
 
-    private MoneyTransaction mapToTransactionModel ( MoneyTransactionEntity transaction ) {
+    private MoneyTransaction MapToTransactionModel(MoneyTransactionEntity transaction ) {
         MoneyTransaction moneyTransaction = new MoneyTransaction();
         moneyTransaction.setId( transaction.getId() );
         moneyTransaction.setTransactionType( transaction.getTransactionType() );
