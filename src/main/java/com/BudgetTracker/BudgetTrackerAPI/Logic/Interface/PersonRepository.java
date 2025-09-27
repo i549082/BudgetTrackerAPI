@@ -11,5 +11,6 @@ public interface PersonRepository {
     public Person GetPersonByEmail ( String email );
     public boolean PersonExistsByUsername ( String username );
     public boolean PersonExistsByEmail ( String email );
+    public boolean ExistsById ( Long id );
     public BigDecimal GetPersonBalance (Long Id );
 }

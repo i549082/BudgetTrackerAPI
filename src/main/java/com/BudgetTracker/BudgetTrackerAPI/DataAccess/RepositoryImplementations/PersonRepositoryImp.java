@@ -42,6 +42,11 @@ public class PersonRepositoryImp implements PersonRepository { // TO DO: Add Exc
     }
 
     @Override
+    public boolean ExistsById ( Long id){
+        return personJpaRepository.existsById( id );
+    }
+
+    @Override
     public boolean PersonExistsByUsername ( String username ){
         return personJpaRepository.existsByUsername(username);
     }

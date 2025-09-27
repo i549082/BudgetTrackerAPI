@@ -3,10 +3,7 @@ package com.BudgetTracker.BudgetTrackerAPI.DataAccess.Entities;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.AccountType;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.TransactionType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
@@ -18,6 +15,7 @@ import java.sql.Timestamp;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 
 
 public class MoneyTransactionEntity {

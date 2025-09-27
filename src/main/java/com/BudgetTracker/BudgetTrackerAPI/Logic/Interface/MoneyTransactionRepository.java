@@ -9,6 +9,6 @@ import java.math.BigDecimal;
 public interface MoneyTransactionRepository {
     public MoneyTransaction GetTransactionById (Long id);
     public MoneyTransaction GetTransactionByDescription(String description);
-    public void SaveTransaction(Long userId, BigDecimal amount, String description, TransactionType transactionType, AccountType accountType);
+    public MoneyTransaction SaveTransaction(Long userId, BigDecimal amount, String description, TransactionType transactionType, AccountType accountType);
 
 }

@@ -40,17 +40,30 @@ public class MoneyTransactionRepositoryImp implements MoneyTransactionRepository
     }
 
     @Override
-    public void SaveTransaction(Long userId, BigDecimal amount, String description, TransactionType transactionType, AccountType accountType){
+    public MoneyTransaction SaveTransaction(Long userId, BigDecimal amount, String description, TransactionType transactionType, AccountType accountType) {
         PersonEntity person = personJpaRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("cannot find user with id:" + userId));
 
-        MoneyTransactionEntity moneyTransactionEntity = new MoneyTransactionEntity();
-        moneyTransactionEntity.setAmount(amount);
-        moneyTransactionEntity.setDescription(description);
-        moneyTransactionEntity.setTransactionType(transactionType);
-        moneyTransactionEntity.setAccountType(accountType);
-        moneyTransactionEntity.setPersonId(person);
-        transactionJpaRepository.save(moneyTransactionEntity);
+        MoneyTransactionEntity moneyTransactionEntity = MoneyTransactionEntity.builder()
+                .amount(amount)
+                .transactionType(transactionType)
+                .accountType(accountType)
+                .description(description)
+                .amount(amount)
+                .build();
+
+        var savedEntity = transactionJpaRepository.save(moneyTransactionEntity);
+
+        return MoneyTransaction.builder()
+                .id(savedEntity.getId())                    // Auto-generated ID
+                .personId(savedEntity.getPersonId().getId()) // Extract ID from PersonEntity
+                .transactionType(savedEntity.getTransactionType())
+                .accountType(savedEntity.getAccountType())
+                .description(savedEntity.getDescription())
+                .amount(savedEntity.getAmount())
+                .dateCreated(savedEntity.getDateCreated())  // Auto-generated timestamp
+                .build();
+
     }
 
     private MoneyTransaction MapToTransactionModel(MoneyTransactionEntity transaction ) {

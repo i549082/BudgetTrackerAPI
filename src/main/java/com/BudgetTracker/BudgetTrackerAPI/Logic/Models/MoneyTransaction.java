@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 
 public class MoneyTransaction {
     private Long  id;
