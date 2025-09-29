@@ -2,8 +2,9 @@ package com.BudgetTracker.BudgetTrackerAPI.Logic.Service;
 
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.AccountType;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.TransactionType;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.MoneyTransactionRepository;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.PersonRepository;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.MoneyTransactionService;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.MoneyTransactionRepository;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonRepository;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.MoneyTransaction;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -11,16 +12,17 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 @Service
-public class MoneyTransactionService {
+public class MoneyTransactionServiceImp implements MoneyTransactionService {
 
     private final PersonRepository personRepository;
     private final MoneyTransactionRepository moneyTransactionRepository;
 
-    public MoneyTransactionService(PersonRepository personRepository,  MoneyTransactionRepository moneyTransactionRepository) {
+    public MoneyTransactionServiceImp(PersonRepository personRepository, MoneyTransactionRepository moneyTransactionRepository) {
         this.personRepository = personRepository;
         this.moneyTransactionRepository = moneyTransactionRepository;
     }
 
+    @Override
     public MoneyTransaction AddTransaction(Long userId, TransactionType transactionType, AccountType accountType, String description, BigDecimal amount ) {
 
         if (userId == null || userId <= 0) {
@@ -37,9 +39,5 @@ public class MoneyTransactionService {
         MoneyTransaction savedTransaction = moneyTransactionRepository.SaveTransaction(userId, amount, description, transactionType, accountType);
 
         return savedTransaction;
-
-
     }
-
-
 }

@@ -1,4 +1,4 @@
-package com.BudgetTracker.BudgetTrackerAPI.Logic.Interface;
+package com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository;
 
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.Person;
 

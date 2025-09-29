@@ -1,8 +1,8 @@
 package com.BudgetTracker.BudgetTrackerAPI.DataAccess.RepositoryImplementations;
 
 import com.BudgetTracker.BudgetTrackerAPI.DataAccess.Entities.PersonEntity;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.PersonRepository;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonJpaRepository;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonRepository;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.JPA.PersonJpaRepository;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.Person;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;

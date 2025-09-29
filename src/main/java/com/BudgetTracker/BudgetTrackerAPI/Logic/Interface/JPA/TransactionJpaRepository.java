@@ -1,4 +1,4 @@
-package com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository;
+package com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.JPA;
 
 import com.BudgetTracker.BudgetTrackerAPI.DataAccess.Entities.MoneyTransactionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

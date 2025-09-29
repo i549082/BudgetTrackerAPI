@@ -4,9 +4,9 @@ import com.BudgetTracker.BudgetTrackerAPI.DataAccess.Entities.MoneyTransactionEn
 import com.BudgetTracker.BudgetTrackerAPI.DataAccess.Entities.PersonEntity;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.AccountType;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.TransactionType;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.MoneyTransactionRepository;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonJpaRepository;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.TransactionJpaRepository;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.MoneyTransactionRepository;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.JPA.PersonJpaRepository;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.JPA.TransactionJpaRepository;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.MoneyTransaction;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -45,6 +45,7 @@ public class MoneyTransactionRepositoryImp implements MoneyTransactionRepository
                 .orElseThrow(() -> new EntityNotFoundException("cannot find user with id:" + userId));
 
         MoneyTransactionEntity moneyTransactionEntity = MoneyTransactionEntity.builder()
+                .personId(person)
                 .amount(amount)
                 .transactionType(transactionType)
                 .accountType(accountType)
@@ -52,28 +53,20 @@ public class MoneyTransactionRepositoryImp implements MoneyTransactionRepository
                 .amount(amount)
                 .build();
 
-        var savedEntity = transactionJpaRepository.save(moneyTransactionEntity);
+        MoneyTransactionEntity savedEntity = transactionJpaRepository.save(moneyTransactionEntity);
 
-        return MoneyTransaction.builder()
-                .id(savedEntity.getId())                    // Auto-generated ID
-                .personId(savedEntity.getPersonId().getId()) // Extract ID from PersonEntity
-                .transactionType(savedEntity.getTransactionType())
-                .accountType(savedEntity.getAccountType())
-                .description(savedEntity.getDescription())
-                .amount(savedEntity.getAmount())
-                .dateCreated(savedEntity.getDateCreated())  // Auto-generated timestamp
-                .build();
-
+        return MapToTransactionModel(savedEntity);
     }
 
     private MoneyTransaction MapToTransactionModel(MoneyTransactionEntity transaction ) {
-        MoneyTransaction moneyTransaction = new MoneyTransaction();
-        moneyTransaction.setId( transaction.getId() );
-        moneyTransaction.setTransactionType( transaction.getTransactionType() );
-        moneyTransaction.setAccountType( transaction.getAccountType() );
-        moneyTransaction.setDescription( transaction.getDescription() );
-        moneyTransaction.setAmount( transaction.getAmount() );
-        moneyTransaction.setDateCreated( transaction.getDateCreated() );
-        return moneyTransaction;
+        return MoneyTransaction.builder()
+                .id(transaction.getId())                    // Auto-generated ID
+                .personId(transaction.getPersonId().getId()) // Extract ID from PersonEntity
+                .transactionType(transaction.getTransactionType())
+                .accountType(transaction.getAccountType())
+                .description(transaction.getDescription())
+                .amount(transaction.getAmount())
+                .dateCreated(transaction.getDateCreated())  // Auto-generated timestamp
+                .build();
     }
 }
