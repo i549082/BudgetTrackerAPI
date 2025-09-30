@@ -13,4 +13,5 @@ public interface PersonRepository {
     public boolean PersonExistsByEmail ( String email );
     public boolean ExistsById ( Long id );
     public BigDecimal GetPersonBalance (Long Id );
+    public Person UpdatePersonBalance(Long personId, BigDecimal newBalance);
 }

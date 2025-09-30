@@ -36,6 +36,17 @@ public class MoneyTransactionServiceImp implements MoneyTransactionService {
         if (!personRepository.ExistsById(userId)) {
             throw new EntityNotFoundException("User not found with id: " + userId);
         }
+        var balance = personRepository.GetPersonBalance(userId); // note to self, big decimal is immutable
+
+        if (transactionType == TransactionType.INCOME) {
+            var newBalance = balance.add(amount);
+            personRepository.UpdatePersonBalance(userId, newBalance);
+        }
+        if (transactionType == TransactionType.EXPENSE) {
+            var newBalance = balance.subtract(amount);
+            personRepository.UpdatePersonBalance(userId, newBalance);
+        }
+
         MoneyTransaction savedTransaction = moneyTransactionRepository.SaveTransaction(userId, amount, description, transactionType, accountType);
 
         return savedTransaction;

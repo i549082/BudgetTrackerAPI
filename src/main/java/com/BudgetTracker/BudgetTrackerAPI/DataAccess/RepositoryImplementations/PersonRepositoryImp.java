@@ -63,6 +63,16 @@ public class PersonRepositoryImp implements PersonRepository { // TO DO: Add Exc
         return balance;
     }
 
+    @Override
+    public Person UpdatePersonBalance(Long personId, BigDecimal newBalance) {
+        PersonEntity personEntity = personJpaRepository.findById(personId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        personEntity.setBalance(newBalance);
+        PersonEntity updatedEntity = personJpaRepository.save(personEntity);
+        return mapToPersonModel(updatedEntity);
+    }
+
     private Person mapToPersonModel ( PersonEntity personEntity ){
         Person person = new Person();
         person.setId( personEntity.getId() );

@@ -1,4 +1,4 @@
-package com.BudgetTracker.BudgetTrackerAPI.Controllers.DTOs;
+package com.BudgetTracker.BudgetTrackerAPI.Controllers.DTOs.Request;
 
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.AccountType;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.TransactionType;
@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AddTransactionDTO {
+public class AddTransactionRequestDTO {
 
 //    Long userId, TransactionType transactionType, AccountType accountType, String description, BigDecimal amount
     private Long userId;

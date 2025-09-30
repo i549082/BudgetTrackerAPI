@@ -1,6 +1,6 @@
 package com.BudgetTracker.BudgetTrackerAPI.Controllers;
 
-import com.BudgetTracker.BudgetTrackerAPI.Controllers.DTOs.AddTransactionDTO;
+import com.BudgetTracker.BudgetTrackerAPI.Controllers.DTOs.Request.AddTransactionRequestDTO;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.MoneyTransactionService;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.MoneyTransaction;
 import org.springframework.http.HttpStatus;
@@ -18,8 +18,8 @@ public class MoneyTransactionController {
         this.moneyTransactionService = moneyTransactionService;
     }
 
-    @PostMapping
-    public ResponseEntity<MoneyTransaction> createMoneyTransaction(@RequestBody AddTransactionDTO transactionDTO){
+    @PostMapping("/addTransaction")
+    public ResponseEntity<MoneyTransaction> createMoneyTransaction(@RequestBody AddTransactionRequestDTO transactionDTO){
         MoneyTransaction createMoneyTransaction = moneyTransactionService.AddTransaction(
                 transactionDTO.getUserId(),
                 transactionDTO.getTransactionType(),
@@ -28,7 +28,7 @@ public class MoneyTransactionController {
                 transactionDTO.getAmount()
         );
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createMoneyTransaction);
+        return ResponseEntity.status(HttpStatus.OK).body(createMoneyTransaction);
     }
 
 }
