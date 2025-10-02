@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class BudgetTrackerServiceTests {
 
@@ -50,7 +49,7 @@ public class BudgetTrackerServiceTests {
         when(personRepository.ExistsById(VALID_USER_ID)).thenReturn(true);
         when(personRepository.GetPersonBalance(VALID_USER_ID)).thenReturn(initialBalance);
         when(moneyTransactionRepository.SaveTransaction(VALID_USER_ID, NEW_TRANSACTION, DESCRIPTION,
-                TransactionType.INCOME, AccountType.BANK)).thenReturn(expectedTransaction);
+                TransactionType.INCOME, AccountType.CASH)).thenReturn(expectedTransaction);
 
         //act
         MoneyTransaction result = moneyTransactionService.AddTransaction(VALID_USER_ID,
