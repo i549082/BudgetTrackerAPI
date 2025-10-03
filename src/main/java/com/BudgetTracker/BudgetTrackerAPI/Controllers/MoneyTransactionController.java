@@ -18,7 +18,7 @@ public class MoneyTransactionController {
         this.moneyTransactionService = moneyTransactionService;
     }
 
-    @PostMapping("/transaction")
+    @PostMapping("/transactions")
     public ResponseEntity<MoneyTransaction> createMoneyTransaction(@RequestBody AddTransactionRequestDTO transactionDTO){
         MoneyTransaction createMoneyTransaction = moneyTransactionService.AddTransaction(
                 transactionDTO.getUserId(),
