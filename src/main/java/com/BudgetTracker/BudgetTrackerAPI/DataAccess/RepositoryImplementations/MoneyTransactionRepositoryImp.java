@@ -19,7 +19,6 @@ public class MoneyTransactionRepositoryImp implements MoneyTransactionRepository
     private final TransactionJpaRepository transactionJpaRepository;
     private final PersonJpaRepository personJpaRepository;
 
-
     public MoneyTransactionRepositoryImp(TransactionJpaRepository transactionJpaRepository, PersonJpaRepository personJpaRepository) {
         this.transactionJpaRepository = transactionJpaRepository;
         this.personJpaRepository = personJpaRepository;

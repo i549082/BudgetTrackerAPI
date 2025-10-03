@@ -18,7 +18,7 @@ public class MoneyTransactionController {
         this.moneyTransactionService = moneyTransactionService;
     }
 
-    @PostMapping("/addTransaction")
+    @PostMapping("/transaction")
     public ResponseEntity<MoneyTransaction> createMoneyTransaction(@RequestBody AddTransactionRequestDTO transactionDTO){
         MoneyTransaction createMoneyTransaction = moneyTransactionService.AddTransaction(
                 transactionDTO.getUserId(),
@@ -28,7 +28,7 @@ public class MoneyTransactionController {
                 transactionDTO.getAmount()
         );
 
-        return ResponseEntity.status(HttpStatus.OK).body(createMoneyTransaction);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createMoneyTransaction);
     }
 
 }
