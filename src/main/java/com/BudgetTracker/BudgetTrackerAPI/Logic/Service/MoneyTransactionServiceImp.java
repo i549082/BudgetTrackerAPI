@@ -2,7 +2,7 @@ package com.BudgetTracker.BudgetTrackerAPI.Logic.Service;
 
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.AccountType;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.TransactionType;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.MoneyTransactionService;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Service.MoneyTransactionService;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.MoneyTransactionRepository;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonRepository;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.MoneyTransaction;
@@ -36,6 +36,7 @@ public class MoneyTransactionServiceImp implements MoneyTransactionService {
         if (!personRepository.ExistsById(userId)) {
             throw new EntityNotFoundException("User not found with id: " + userId);
         }
+
         var balance = personRepository.GetPersonBalance(userId); // note to self, big decimal is immutable
 
         if (transactionType == TransactionType.INCOME) {

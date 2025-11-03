@@ -2,7 +2,6 @@ package com.BudgetTracker.BudgetTrackerService;
 
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.AccountType;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.TransactionType;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.MoneyTransactionService;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.MoneyTransactionRepository;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonRepository;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.MoneyTransaction;
@@ -15,8 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
-
-import  org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
