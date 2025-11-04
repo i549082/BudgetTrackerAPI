@@ -4,6 +4,11 @@ import com.BudgetTracker.BudgetTrackerAPI.Controllers.DTOs.Request.AddTransactio
 import com.BudgetTracker.BudgetTrackerAPI.Controllers.DTOs.Response.TransactionsResponse;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Service.MoneyTransactionService;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.MoneyTransaction;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +25,21 @@ public class MoneyTransactionController {
     public MoneyTransactionController(MoneyTransactionService moneyTransactionService) {
         this.moneyTransactionService = moneyTransactionService;
     }
+
+    @Operation(
+            summary = "Create a new money transaction",
+            description = "Adds a new transaction for a specific user and returns transaction details."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Transaction created successfully",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = TransactionsResponse.class))
+            ),
+            @ApiResponse(responseCode = "400", description = "Invalid input data",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content)
+    })
 
     @PostMapping("/transactions")
     public ResponseEntity<TransactionsResponse> createMoneyTransaction(@RequestBody AddTransactionRequest transactionDTO){

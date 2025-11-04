@@ -1,9 +1,6 @@
 package com.BudgetTracker.BudgetTrackerAPI.Controllers;
 
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonRepository;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Service.PersonService;
-import jakarta.persistence.Id;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -22,5 +19,20 @@ public class PersonController {
     @GetMapping("/{id}/balance")
     public BigDecimal getBalance(@PathVariable Long id) {
       return  personService.GetBalance(id);
+    }
+
+    @GetMapping("/{id}/expense")
+    public BigDecimal getExpense(@PathVariable Long id) {
+        return  personService.GetTotalExpense(id);
+    }
+
+    @GetMapping("/{id}/income")
+    public BigDecimal getIncome(@PathVariable Long id) {
+        return  personService.getTotalIncome(id);
+    }
+
+    @GetMapping("/{id}/balance/bank")
+    public BigDecimal getBalanceBank(@PathVariable Long id) {
+        return  personService.getBalanceBank(id);
     }
 }

@@ -25,7 +25,7 @@ public class MoneyTransactionEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", nullable = false)
-    private PersonEntity personId; // Foreign key to PersonEntity
+    private PersonEntity person; // Foreign key to PersonEntity
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
