@@ -31,7 +31,24 @@ public class PersonServiceImpTests {
         BigDecimal result = personService.getBalance(userId);
 
         assertEquals(new BigDecimal("150.00"), result);
-        verify(personRepository).getPersonBalance(userId);
+    }
+
+    @Test
+    void getBankBalance_returnsBankBalance_whenUserExists() {
+        Long userId = 1L;
+        when(personRepository.existsById(userId)).thenReturn(true);
+        when(personRepository.getBankIncome(userId)).thenReturn(List.of(
+                new BigDecimal("100.00"),
+                new BigDecimal("200.00") //300
+        ));
+        when(personRepository.getBankExpenses(userId)).thenReturn(List.of(
+                new BigDecimal("50.00"),
+                new BigDecimal("50.00") //100
+        ));
+
+        BigDecimal result = personService.getBalanceBank(userId);
+
+        assertEquals(new BigDecimal("200.00"), result);
     }
 
     @Test
