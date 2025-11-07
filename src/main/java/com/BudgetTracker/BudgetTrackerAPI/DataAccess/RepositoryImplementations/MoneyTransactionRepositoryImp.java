@@ -12,6 +12,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MoneyTransactionRepositoryImp implements MoneyTransactionRepository {
@@ -39,12 +41,25 @@ public class MoneyTransactionRepositoryImp implements MoneyTransactionRepository
     }
 
     @Override
+    public List<MoneyTransaction> GetTransactionsById(Long id){
+    List<MoneyTransactionEntity> transactionEntities = transactionJpaRepository.findByPersonId(id);
+
+    List<MoneyTransaction> transactions = new ArrayList<>();
+
+      for(MoneyTransactionEntity transactionEntity : transactionEntities){
+          MoneyTransaction transaction = MapToTransactionModel(transactionEntity);
+            transactions.add(transaction);
+        }
+      return transactions;
+    }
+
+    @Override
     public MoneyTransaction SaveTransaction(Long userId, BigDecimal amount, String description, TransactionType transactionType, AccountType accountType) {
         PersonEntity person = personJpaRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("cannot find user with id:" + userId));
 
         MoneyTransactionEntity moneyTransactionEntity = MoneyTransactionEntity.builder()
-                .personId(person)
+                .person(person)
                 .amount(amount)
                 .transactionType(transactionType)
                 .accountType(accountType)
@@ -60,7 +75,7 @@ public class MoneyTransactionRepositoryImp implements MoneyTransactionRepository
     private MoneyTransaction MapToTransactionModel(MoneyTransactionEntity transaction ) {
         return MoneyTransaction.builder()
                 .id(transaction.getId())                    // Auto-generated ID
-                .personId(transaction.getPersonId().getId()) // Extract ID from PersonEntity
+                .personId(transaction.getPerson().getId()) // Extract ID from PersonEntity
                 .transactionType(transaction.getTransactionType())
                 .accountType(transaction.getAccountType())
                 .description(transaction.getDescription())
