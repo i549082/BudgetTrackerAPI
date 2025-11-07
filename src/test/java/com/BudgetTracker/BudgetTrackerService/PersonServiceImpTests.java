@@ -24,21 +24,18 @@ public class PersonServiceImpTests {
 
     @Test
     void getBalance_returnsBalance_whenUserExists() {
-        // Arrange
         Long userId = 1L;
         when(personRepository.existsById(userId)).thenReturn(true);
         when(personRepository.getPersonBalance(userId)).thenReturn(new BigDecimal("150.00"));
 
-        // Act
         BigDecimal result = personService.getBalance(userId);
 
-        // Assert
         assertEquals(new BigDecimal("150.00"), result);
         verify(personRepository).getPersonBalance(userId);
     }
 
     @Test
-    void getTotalExpense_returnsSumOfExpenses() {
+    void getTotalExpense_returnsSumOfExpenses_whenUserExists() {
         Long userId = 1L;
         when(personRepository.existsById(userId)).thenReturn(true);
         when(personRepository.getExpenses(userId)).thenReturn(List.of(
@@ -52,7 +49,7 @@ public class PersonServiceImpTests {
     }
 
     @Test
-    void getTotalIncome_returnsSumOfIncome() {
+    void getTotalIncome_returnsSumOfIncome_whenUserExists() {
         Long userId = 1L;
         when(personRepository.existsById(userId)).thenReturn(true);
         when(personRepository.getIncome(userId)).thenReturn(List.of(
