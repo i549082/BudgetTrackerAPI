@@ -19,32 +19,32 @@ public class PersonServiceImp implements PersonService { // NOTE: SUBSTRACT FROM
     }
 
     @Override
-    public BigDecimal GetBalance ( Long userId ) {
+    public BigDecimal getBalance(Long userId ) {
 
         if (userId == null || userId <= 0) {
             throw new IllegalArgumentException("Invalid user ID");
         }
 
-        if (!personRepository.ExistsById(userId)) {
+        if (!personRepository.existsById(userId)) {
             throw new EntityNotFoundException("User not found with id: " + userId);
         }
 
-        var balance = personRepository.GetPersonBalance(userId);
+        var balance = personRepository.getPersonBalance(userId);
 
         return balance;
     }
 
     @Override
-    public BigDecimal GetTotalExpense( Long userId ) {
+    public BigDecimal getTotalExpense(Long userId ) {
         if (userId == null || userId <= 0) {
             throw new IllegalArgumentException("Invalid user ID");
         }
 
-        if (!personRepository.ExistsById(userId)) {
+        if (!personRepository.existsById(userId)) {
             throw new EntityNotFoundException("User not found with id: " + userId);
         }
 
-        List<BigDecimal> expenses = personRepository.GetExpenses(userId);
+        List<BigDecimal> expenses = personRepository.getExpenses(userId);
 
         BigDecimal totalExpenses = BigDecimal.ZERO;
         for (BigDecimal expense: expenses) {
@@ -60,14 +60,14 @@ public class PersonServiceImp implements PersonService { // NOTE: SUBSTRACT FROM
             throw new IllegalArgumentException("Invalid user ID");
         }
 
-        if (!personRepository.ExistsById(userId)) {
+        if (!personRepository.existsById(userId)) {
             throw new EntityNotFoundException("User not found with id: " + userId);
         }
 
-        BigDecimal expense = GetTotalExpense(userId);
+        BigDecimal expense = getTotalExpense(userId);
 
 
-        List<BigDecimal> incomeList = personRepository.GetIncome(userId);
+        List<BigDecimal> incomeList = personRepository.getIncome(userId);
 
         BigDecimal totalIncome = BigDecimal.ZERO;
         for (BigDecimal income: incomeList) {
@@ -82,14 +82,14 @@ public class PersonServiceImp implements PersonService { // NOTE: SUBSTRACT FROM
             throw new IllegalArgumentException("Invalid user ID");
         }
 
-        if (!personRepository.ExistsById(userId)) {
+        if (!personRepository.existsById(userId)) {
             throw new EntityNotFoundException("User not found with id: " + userId);
         }
 
         BigDecimal totalBankBalance = BigDecimal.ZERO;
 
-        List<BigDecimal> bankIncome = personRepository.GetBankIncome(userId);
-        List<BigDecimal> bankExpense = personRepository.GetBankExpenses(userId);
+        List<BigDecimal> bankIncome = personRepository.getBankIncome(userId);
+        List<BigDecimal> bankExpense = personRepository.getBankExpenses(userId);
 
         for (BigDecimal income: bankIncome) {
             totalBankBalance = totalBankBalance.add(income);
@@ -100,6 +100,32 @@ public class PersonServiceImp implements PersonService { // NOTE: SUBSTRACT FROM
         }
 
         return totalBankBalance;
+    }
+
+    @Override
+    public BigDecimal getCashBalance(Long userId){
+        if (userId  == null || userId <= 0) {
+            throw new IllegalArgumentException("Invalid user ID");
+        }
+
+        if (!personRepository.existsById(userId)) {
+            throw new EntityNotFoundException("User not found with id: " + userId);
+        }
+
+        BigDecimal totalCashBalance = BigDecimal.ZERO;
+
+        List<BigDecimal> cashIncome = personRepository.getCashIncome(userId);
+        List<BigDecimal> cashExpense = personRepository.getCashExpenses(userId);
+
+        for (BigDecimal income: cashIncome) {
+            totalCashBalance = totalCashBalance.add(income);
+        }
+
+        for (BigDecimal income: cashExpense) {
+            totalCashBalance = totalCashBalance.subtract(income);
+        }
+
+        return totalCashBalance;
     }
 
 }

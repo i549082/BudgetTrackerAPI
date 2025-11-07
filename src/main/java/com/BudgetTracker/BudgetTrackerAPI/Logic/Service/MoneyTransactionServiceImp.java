@@ -33,19 +33,19 @@ public class MoneyTransactionServiceImp implements MoneyTransactionService {
             throw new IllegalArgumentException("Amount must be positive");
         }
 
-        if (!personRepository.ExistsById(userId)) {
+        if (!personRepository.existsById(userId)) {
             throw new EntityNotFoundException("User not found with id: " + userId);
         }
 
-        var balance = personRepository.GetPersonBalance(userId); // note to self, big decimal is immutable
+        var balance = personRepository.getPersonBalance(userId); // note to self, big decimal is immutable
 
         if (transactionType == TransactionType.INCOME) {
             var newBalance = balance.add(amount);
-            personRepository.UpdatePersonBalance(userId, newBalance);
+            personRepository.updatePersonBalance(userId, newBalance);
         }
         if (transactionType == TransactionType.EXPENSE) {
             var newBalance = balance.subtract(amount);
-            personRepository.UpdatePersonBalance(userId, newBalance);
+            personRepository.updatePersonBalance(userId, newBalance);
         }
 
         MoneyTransaction savedTransaction = moneyTransactionRepository.SaveTransaction(userId, amount, description, transactionType, accountType);

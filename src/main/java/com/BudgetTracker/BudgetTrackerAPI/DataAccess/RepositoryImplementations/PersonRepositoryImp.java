@@ -3,7 +3,6 @@ package com.BudgetTracker.BudgetTrackerAPI.DataAccess.RepositoryImplementations;
 import com.BudgetTracker.BudgetTrackerAPI.DataAccess.Entities.PersonEntity;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.AccountType;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.TransactionType;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.JPA.TransactionJpaRepository;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.MoneyTransactionRepository;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonRepository;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.JPA.PersonJpaRepository;
@@ -28,7 +27,7 @@ public class PersonRepositoryImp implements PersonRepository { // TO DO: Add Exc
     }
 
     @Override
-    public Person GetPersonById (Long id ) {
+    public Person getPersonById(Long id ) {
         PersonEntity personEntity = personJpaRepository.findById( id )
                .orElseThrow(() -> new EntityNotFoundException("User not found with id " + id));
 
@@ -36,43 +35,43 @@ public class PersonRepositoryImp implements PersonRepository { // TO DO: Add Exc
     }
 
     @Override
-    public Person GetPersonByUsername ( String username ){
+    public Person getPersonByUsername(String username ){
         PersonEntity personEntity =  personJpaRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with username " + username));
             return mapToPersonModel( personEntity );
     }
 
     @Override
-    public Person GetPersonByEmail ( String email ){
+    public Person getPersonByEmail(String email ){
         PersonEntity personEntity = personJpaRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with email " + email));
         return mapToPersonModel( personEntity);
     }
 
     @Override
-    public boolean ExistsById ( Long id){
+    public boolean existsById(Long id){
         return personJpaRepository.existsById( id );
     }
 
     @Override
-    public boolean PersonExistsByUsername ( String username ){
+    public boolean personExistsByUsername(String username ){
         return personJpaRepository.existsByUsername(username);
     }
 
     @Override
-    public boolean PersonExistsByEmail ( String email ){
+    public boolean personExistsByEmail(String email ){
         return personJpaRepository.existsByEmail(email);
     }
 
     @Override
-    public BigDecimal GetPersonBalance (Long id ){
-        var person = GetPersonById( id );
+    public BigDecimal getPersonBalance(Long id ){
+        var person = getPersonById( id );
         var balance = person.getBalance();
         return balance;
     }
 
     @Override
-    public List<BigDecimal> GetExpenses (Long id ){
+    public List<BigDecimal> getExpenses(Long id ){
         List<MoneyTransaction> personTransactions = moneyTransactionRepository.GetTransactionsById(id);
         List<BigDecimal> expenses = new ArrayList<>();
         for (MoneyTransaction  transaction : personTransactions) {
@@ -84,7 +83,7 @@ public class PersonRepositoryImp implements PersonRepository { // TO DO: Add Exc
     }
 
     @Override
-    public List<BigDecimal> GetIncome (Long id ){
+    public List<BigDecimal> getIncome(Long id ){
         List<MoneyTransaction> personTransactions = moneyTransactionRepository.GetTransactionsById(id);
         List<BigDecimal> incomeList = new ArrayList<>();
         for (MoneyTransaction  transaction : personTransactions) {
@@ -96,7 +95,7 @@ public class PersonRepositoryImp implements PersonRepository { // TO DO: Add Exc
     }
 
     @Override
-    public List<BigDecimal> GetBankIncome (Long id){
+    public List<BigDecimal> getBankIncome(Long id){
         List<MoneyTransaction> personTransactions = moneyTransactionRepository.GetTransactionsById(id);
         List<BigDecimal> bankIncomeList = new ArrayList<>();
         for (MoneyTransaction  transaction : personTransactions) {
@@ -108,7 +107,7 @@ public class PersonRepositoryImp implements PersonRepository { // TO DO: Add Exc
     }
 
     @Override
-    public List<BigDecimal> GetBankExpenses (Long id){
+    public List<BigDecimal> getBankExpenses(Long id){
         List<MoneyTransaction> personTransactions = moneyTransactionRepository.GetTransactionsById(id);
         List<BigDecimal> bankExpensesList = new ArrayList<>();
         for (MoneyTransaction  transaction : personTransactions) {
@@ -120,7 +119,31 @@ public class PersonRepositoryImp implements PersonRepository { // TO DO: Add Exc
     }
 
     @Override
-    public Person UpdatePersonBalance(Long personId, BigDecimal newBalance) {
+    public List<BigDecimal> getCashIncome(Long id){
+        List<MoneyTransaction> personTransactions = moneyTransactionRepository.GetTransactionsById(id);
+        List<BigDecimal> cashIncomeList = new ArrayList<>();
+        for (MoneyTransaction  transaction : personTransactions) {
+            if(transaction.getTransactionType() == TransactionType.INCOME &&  transaction.getAccountType() == AccountType.CASH)  {
+                cashIncomeList.add(transaction.getAmount());
+            }
+        }
+        return cashIncomeList;
+    }
+
+    @Override
+    public List<BigDecimal> getCashExpenses(Long id){
+        List<MoneyTransaction> personTransactions = moneyTransactionRepository.GetTransactionsById(id);
+        List<BigDecimal> cashExpensesList = new ArrayList<>();
+        for (MoneyTransaction  transaction : personTransactions) {
+            if(transaction.getTransactionType() == TransactionType.EXPENSE &&  transaction.getAccountType() == AccountType.CASH)  {
+                cashExpensesList.add(transaction.getAmount());
+            }
+        }
+        return cashExpensesList;
+    }
+
+    @Override
+    public Person updatePersonBalance(Long personId, BigDecimal newBalance) {
         PersonEntity personEntity = personJpaRepository.findById(personId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 

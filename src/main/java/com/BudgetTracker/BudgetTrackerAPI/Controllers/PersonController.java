@@ -18,12 +18,12 @@ public class PersonController {
 
     @GetMapping("/{id}/balance")
     public BigDecimal getBalance(@PathVariable Long id) {
-      return  personService.GetBalance(id);
+      return  personService.getBalance(id);
     }
 
     @GetMapping("/{id}/expense")
     public BigDecimal getExpense(@PathVariable Long id) {
-        return  personService.GetTotalExpense(id);
+        return  personService.getTotalExpense(id);
     }
 
     @GetMapping("/{id}/income")
@@ -34,5 +34,10 @@ public class PersonController {
     @GetMapping("/{id}/balance/bank")
     public BigDecimal getBalanceBank(@PathVariable Long id) {
         return  personService.getBalanceBank(id);
+    }
+
+    @GetMapping("/{id}/balance/cash")
+    public BigDecimal getBalanceCash(@PathVariable Long id) {
+        return  personService.getCashBalance(id);
     }
 }

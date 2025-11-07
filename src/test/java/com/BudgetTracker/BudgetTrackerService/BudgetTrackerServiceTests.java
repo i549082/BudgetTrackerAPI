@@ -18,8 +18,8 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-@SpringBootTest
+// ai written
+@SpringBootTest //needed for integration tests
 @ExtendWith(MockitoExtension.class)
 public class BudgetTrackerServiceTests {
 
@@ -44,8 +44,8 @@ public class BudgetTrackerServiceTests {
         BigDecimal expectedNewBalance = new BigDecimal("20");
         MoneyTransaction expectedTransaction = new MoneyTransaction();
 
-        when(personRepository.ExistsById(VALID_USER_ID)).thenReturn(true);
-        when(personRepository.GetPersonBalance(VALID_USER_ID)).thenReturn(initialBalance);
+        when(personRepository.existsById(VALID_USER_ID)).thenReturn(true);
+        when(personRepository.getPersonBalance(VALID_USER_ID)).thenReturn(initialBalance);
         when(moneyTransactionRepository.SaveTransaction(VALID_USER_ID, NEW_TRANSACTION, DESCRIPTION,
                 TransactionType.INCOME, AccountType.BANK)).thenReturn(expectedTransaction);
 
@@ -54,7 +54,7 @@ public class BudgetTrackerServiceTests {
                 TransactionType.INCOME, AccountType.CASH, DESCRIPTION, NEW_TRANSACTION);
 
         //assert
-        verify(personRepository).UpdatePersonBalance(VALID_USER_ID, expectedNewBalance);
+        verify(personRepository).updatePersonBalance(VALID_USER_ID, expectedNewBalance);
         verify(moneyTransactionRepository).SaveTransaction(VALID_USER_ID, NEW_TRANSACTION,
                 DESCRIPTION, TransactionType.INCOME, AccountType.CASH);
         assertEquals(expectedTransaction, result);

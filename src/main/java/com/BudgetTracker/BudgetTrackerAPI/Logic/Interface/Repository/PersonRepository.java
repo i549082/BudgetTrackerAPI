@@ -7,16 +7,18 @@ import java.util.List;
 
 public interface PersonRepository {
 
-    public Person GetPersonById (Long id );
-    public Person GetPersonByUsername ( String username );
-    public Person GetPersonByEmail ( String email );
-    public boolean PersonExistsByUsername ( String username );
-    public boolean PersonExistsByEmail ( String email );
-    public boolean ExistsById ( Long id );
-    public BigDecimal GetPersonBalance (Long Id );
-    public Person UpdatePersonBalance(Long personId, BigDecimal newBalance);
-    public List<BigDecimal> GetExpenses (Long id );
-    List<BigDecimal> GetIncome (Long id );
-    List<BigDecimal> GetBankIncome (Long id);
-    List<BigDecimal> GetBankExpenses(Long id);
+    Person getPersonById(Long id );
+    Person getPersonByUsername(String username );
+    Person getPersonByEmail(String email );
+    boolean personExistsByUsername(String username );
+    boolean personExistsByEmail(String email );
+    boolean existsById(Long id );
+    BigDecimal getPersonBalance(Long Id );
+    Person updatePersonBalance(Long personId, BigDecimal newBalance);
+    List<BigDecimal> getExpenses(Long id );
+    List<BigDecimal> getIncome(Long id );
+    List<BigDecimal> getBankIncome(Long id);
+    List<BigDecimal> getBankExpenses(Long id);
+    List<BigDecimal> getCashIncome(Long id);
+    List<BigDecimal> getCashExpenses(Long id);
 }
