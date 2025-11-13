@@ -52,6 +52,24 @@ public class PersonServiceImpTests {
     }
 
     @Test
+    void getCashBalance_returnsCashBalance_whenUserExists() {
+        Long userId = 1L;
+        when(personRepository.existsById(userId)).thenReturn(true);
+        when(personRepository.getCashIncome(userId)).thenReturn(List.of(
+                new BigDecimal("100.00"),
+                new BigDecimal("200.00") //300
+        ));
+        when(personRepository.getCashExpenses(userId)).thenReturn(List.of(
+                new BigDecimal("50.00"),
+                new BigDecimal("50.00") //100
+        ));
+
+        BigDecimal result = personService.getCashBalance(userId);
+
+        assertEquals(new BigDecimal("200.00"), result);
+    }
+
+    @Test
     void getTotalExpense_returnsSumOfExpenses_whenUserExists() {
         Long userId = 1L;
         when(personRepository.existsById(userId)).thenReturn(true);
