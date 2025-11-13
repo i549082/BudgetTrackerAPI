@@ -24,21 +24,53 @@ public class PersonServiceImpTests {
 
     @Test
     void getBalance_returnsBalance_whenUserExists() {
-        // Arrange
         Long userId = 1L;
         when(personRepository.existsById(userId)).thenReturn(true);
         when(personRepository.getPersonBalance(userId)).thenReturn(new BigDecimal("150.00"));
 
-        // Act
         BigDecimal result = personService.getBalance(userId);
 
-        // Assert
         assertEquals(new BigDecimal("150.00"), result);
-        verify(personRepository).getPersonBalance(userId);
     }
 
     @Test
-    void getTotalExpense_returnsSumOfExpenses() {
+    void getBankBalance_returnsBankBalance_whenUserExists() {
+        Long userId = 1L;
+        when(personRepository.existsById(userId)).thenReturn(true);
+        when(personRepository.getBankIncome(userId)).thenReturn(List.of(
+                new BigDecimal("100.00"),
+                new BigDecimal("200.00") //300
+        ));
+        when(personRepository.getBankExpenses(userId)).thenReturn(List.of(
+                new BigDecimal("50.00"),
+                new BigDecimal("50.00") //100
+        ));
+
+        BigDecimal result = personService.getBalanceBank(userId);
+
+        assertEquals(new BigDecimal("200.00"), result);
+    }
+
+    @Test
+    void getCashBalance_returnsCashBalance_whenUserExists() {
+        Long userId = 1L;
+        when(personRepository.existsById(userId)).thenReturn(true);
+        when(personRepository.getCashIncome(userId)).thenReturn(List.of(
+                new BigDecimal("100.00"),
+                new BigDecimal("200.00") //300
+        ));
+        when(personRepository.getCashExpenses(userId)).thenReturn(List.of(
+                new BigDecimal("50.00"),
+                new BigDecimal("50.00") //100
+        ));
+
+        BigDecimal result = personService.getCashBalance(userId);
+
+        assertEquals(new BigDecimal("200.00"), result);
+    }
+
+    @Test
+    void getTotalExpense_returnsSumOfExpenses_whenUserExists() {
         Long userId = 1L;
         when(personRepository.existsById(userId)).thenReturn(true);
         when(personRepository.getExpenses(userId)).thenReturn(List.of(
@@ -52,7 +84,7 @@ public class PersonServiceImpTests {
     }
 
     @Test
-    void getTotalIncome_returnsSumOfIncome() {
+    void getTotalIncome_returnsSumOfIncome_whenUserExists() {
         Long userId = 1L;
         when(personRepository.existsById(userId)).thenReturn(true);
         when(personRepository.getIncome(userId)).thenReturn(List.of(

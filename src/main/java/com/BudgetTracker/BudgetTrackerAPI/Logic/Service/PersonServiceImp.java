@@ -127,5 +127,4 @@ public class PersonServiceImp implements PersonService { // NOTE: SUBSTRACT FROM
 
         return totalCashBalance;
     }
-
 }
