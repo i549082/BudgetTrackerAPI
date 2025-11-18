@@ -1,7 +1,7 @@
 name: Java CD with Maven for backend
 on:
   workflow_run:
-    workflows: ["Java CI with Maven"]
+    workflows: ["Java CI with Maven for backend"]
     types:
       - completed
 
