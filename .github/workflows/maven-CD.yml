@@ -1,0 +1,27 @@
+name: Java CD with Maven for backend
+on:
+  workflow_run:
+    workflows: ["Java CI with Maven"]
+    types:
+      - completed
+
+
+jobs:
+  deploy:
+    name: Build and Deploy Application
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'master' }}
+
+    steps:
+      - name: Download code repository
+        uses: actions/checkout@v4
+
+      - name: Configure java environment
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+
+      - name: Build Application Skip Tests
+        run: mvn -B clean package -DskipTests

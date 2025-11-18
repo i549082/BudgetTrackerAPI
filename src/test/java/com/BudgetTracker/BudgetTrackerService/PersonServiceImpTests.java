@@ -61,7 +61,7 @@ public class PersonServiceImpTests {
         ));
         when(personRepository.getCashExpenses(userId)).thenReturn(List.of(
                 new BigDecimal("50.00"),
-                new BigDecimal("50.00") //100
+                new BigDecimal("50.00") //150
         ));
 
         BigDecimal result = personService.getCashBalance(userId);
