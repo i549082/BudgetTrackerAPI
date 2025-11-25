@@ -5,7 +5,7 @@ import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.AccountType;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.TransactionType;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.MoneyTransactionRepository;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonRepository;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.JPA.PersonJpaRepository;
+import com.BudgetTracker.BudgetTrackerAPI.DataAccess.JPA.PersonJpaRepository;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.MoneyTransaction;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.Person;
 import jakarta.persistence.EntityNotFoundException;
