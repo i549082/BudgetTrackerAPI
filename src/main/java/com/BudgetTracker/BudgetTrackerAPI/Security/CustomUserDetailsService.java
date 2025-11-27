@@ -1,0 +1,26 @@
+package com.BudgetTracker.BudgetTrackerAPI.Security;
+
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonRepository;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.Person;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class CustomUserDetailsService implements UserDetailsService {
+
+    private final PersonRepository personRepository;
+
+    public CustomUserDetailsService(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Person person = personRepository.getPersonByUsername(username);
+        return  new CustomUserDetails(person);
+    }
+
+}

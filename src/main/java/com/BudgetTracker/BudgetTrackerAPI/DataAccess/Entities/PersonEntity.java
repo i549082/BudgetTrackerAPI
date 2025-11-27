@@ -1,5 +1,6 @@
 package com.BudgetTracker.BudgetTrackerAPI.DataAccess.Entities;
 
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +24,10 @@ public class PersonEntity {
 
     @Column(name = "username", nullable = false, unique = true, length = 50)
     private String username;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private Role role;
 
     @Column(name = "email", nullable = false, unique = true, length = 255)
     private String email;

@@ -9,6 +9,7 @@ import com.BudgetTracker.BudgetTrackerAPI.DataAccess.JPA.PersonJpaRepository;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.MoneyTransaction;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.Person;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -37,7 +38,7 @@ public class PersonRepositoryImp implements PersonRepository { // TO DO: Add Exc
     @Override
     public Person getPersonByUsername(String username ){
         PersonEntity personEntity =  personJpaRepository.findByUsername(username)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with username " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username " + username));
             return mapToPersonModel( personEntity );
     }
 
@@ -158,6 +159,7 @@ public class PersonRepositoryImp implements PersonRepository { // TO DO: Add Exc
         person.setUsername( personEntity.getUsername() );
         person.setEmail( personEntity.getEmail() );
         person.setBalance( personEntity.getBalance() );
+        person.setRole( personEntity.getRole() );
         return person;
     }
 }
