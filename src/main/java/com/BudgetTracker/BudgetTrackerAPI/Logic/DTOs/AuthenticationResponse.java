@@ -1,0 +1,13 @@
+package com.BudgetTracker.BudgetTrackerAPI.Logic.DTOs;
+
+public class AuthenticationResponse {
+    private final String token;
+
+    public AuthenticationResponse(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+}

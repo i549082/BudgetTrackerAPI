@@ -50,6 +50,16 @@ public class PersonRepositoryImp implements PersonRepository { // TO DO: Add Exc
     }
 
     @Override
+    public Person savePerson(Person person){
+        if (person == null) {
+            throw new IllegalArgumentException("Person cannot be null");
+        }
+
+        PersonEntity personEntity = mapToPersonEntity(person);
+        PersonEntity savedEntity = personJpaRepository.save(personEntity);
+        return mapToPersonModel(savedEntity);
+    }
+    @Override
     public boolean existsById(Long id){
         return personJpaRepository.existsById( id );
     }
@@ -158,8 +168,20 @@ public class PersonRepositoryImp implements PersonRepository { // TO DO: Add Exc
         person.setId( personEntity.getId() );
         person.setUsername( personEntity.getUsername() );
         person.setEmail( personEntity.getEmail() );
+        person.setHashedPassword( personEntity.getHashedPassword() );
         person.setBalance( personEntity.getBalance() );
         person.setRole( personEntity.getRole() );
         return person;
+    }
+
+    private PersonEntity mapToPersonEntity ( Person person ){
+        PersonEntity personEntity = new PersonEntity();
+        personEntity.setId( person.getId() );
+        personEntity.setUsername( person.getUsername() );
+        personEntity.setEmail( person.getEmail() );
+        personEntity.setHashedPassword( person.getHashedPassword() );
+        personEntity.setBalance( person.getBalance() );
+        personEntity.setRole( person.getRole() );
+        return personEntity;
     }
 }

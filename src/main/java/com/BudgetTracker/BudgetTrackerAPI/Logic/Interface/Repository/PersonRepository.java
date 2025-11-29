@@ -21,4 +21,5 @@ public interface PersonRepository {
     List<BigDecimal> getBankExpenses(Long id);
     List<BigDecimal> getCashIncome(Long id);
     List<BigDecimal> getCashExpenses(Long id);
+    Person savePerson(Person person);
 }
