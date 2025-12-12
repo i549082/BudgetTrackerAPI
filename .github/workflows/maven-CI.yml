@@ -9,8 +9,6 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -24,17 +22,15 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Validate Flyway migrations (no DB)
-        run: mvn -B -Dspring.flyway.validate-on-migrate=true test
-
       - name: Build and test
         run: mvn -B clean verify
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@v5.0.0
         with:
           args: >
             -Dsonar.projectKey=i549082_BudgetTrackerAPI
             -Dsonar.organization=i549082
+            -Dsonar.java.binaries=target/classes
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
