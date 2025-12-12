@@ -23,5 +23,7 @@ jobs:
           java-version: '21'
           cache: 'maven'
 
+
+
       - name: Build Application Skip Tests
         run: mvn -B clean package -DskipTests

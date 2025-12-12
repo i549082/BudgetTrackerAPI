@@ -4,26 +4,37 @@ on:
   push:
     branches: [ master, dev ]
   pull_request:
-    branches: [master, dev]
-  release:
-    types: [created]
+    branches: [ master, dev ]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 21
-      uses: actions/setup-java@v4
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        cache: 'maven'
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Build and test with Maven
-      run: mvn -B clean package
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
 
+      - name: Validate Flyway migrations
+        run: mvn -B flyway:validate
+
+      - name: Build and test
+        run: mvn -B clean verify
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          args: >
+            -Dsonar.projectKey=YOUR_PROJECT_KEY
+            -Dsonar.organization=YOUR_ORGANIZATION
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
