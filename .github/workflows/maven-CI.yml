@@ -22,6 +22,9 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
+      - name: Validate Flyway migrations
+        run: mvn -B -Dspring.flyway.validate-on-migrate=true
+
       - name: Build and test
         run: mvn -B clean verify
 
