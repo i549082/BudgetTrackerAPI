@@ -23,7 +23,7 @@ jobs:
           cache: 'maven'
 
       - name: Validate Flyway migrations
-        run: mvn -B -Dspring.flyway.validate-on-migrate=true
+        run: mvn -B -Dspring.flyway.validate-on-migrate=true test
 
       - name: Build and test
         run: mvn -B clean verify
