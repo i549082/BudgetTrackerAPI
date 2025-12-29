@@ -9,6 +9,7 @@ public interface PersonRepository {
 
     Person getPersonById(Long id );
     Person getPersonByUsername(String username );
+    List<Person> getAllPeople();
     Person getPersonByEmail(String email );
     boolean personExistsByUsername(String username );
     boolean personExistsByEmail(String email );

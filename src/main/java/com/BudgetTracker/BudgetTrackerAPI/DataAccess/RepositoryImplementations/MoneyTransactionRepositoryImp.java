@@ -54,6 +54,20 @@ public class MoneyTransactionRepositoryImp implements MoneyTransactionRepository
     }
 
     @Override
+    public List<MoneyTransaction> getAllTransactions() {
+
+        List<MoneyTransactionEntity> entities = transactionJpaRepository.findAll();
+        List<MoneyTransaction> transactions = new ArrayList<>();
+
+        for (MoneyTransactionEntity entity : entities) {
+            transactions.add(MapToTransactionModel(entity));
+        }
+
+        return transactions;
+    }
+
+
+    @Override
     public MoneyTransaction SaveTransaction(Long userId, BigDecimal amount, String description, TransactionType transactionType, AccountType accountType) {
         PersonEntity person = personJpaRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("cannot find user with id:" + userId));
@@ -74,13 +88,15 @@ public class MoneyTransactionRepositoryImp implements MoneyTransactionRepository
 
     private MoneyTransaction MapToTransactionModel(MoneyTransactionEntity transaction ) {
         return MoneyTransaction.builder()
-                .id(transaction.getId())                    // Auto-generated ID
-                .personId(transaction.getPerson().getId()) // Extract ID from PersonEntity
+                .id(transaction.getId())
+                .personId(transaction.getPerson().getId())
+                .username(transaction.getPerson().getUsername())
+                .email(transaction.getPerson().getEmail())
                 .transactionType(transaction.getTransactionType())
                 .accountType(transaction.getAccountType())
                 .description(transaction.getDescription())
                 .amount(transaction.getAmount())
-                .dateCreated(transaction.getDateCreated())  // Auto-generated timestamp
+                .dateCreated(transaction.getDateCreated())
                 .build();
     }
 }

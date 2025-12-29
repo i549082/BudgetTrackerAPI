@@ -9,5 +9,7 @@ import java.util.Optional;
 public interface TransactionJpaRepository extends JpaRepository<MoneyTransactionEntity, Long> {
     Optional<MoneyTransactionEntity> findByDescription(String description);
     List<MoneyTransactionEntity> findByPersonId(Long personId);
+    List<MoneyTransactionEntity> findAll();
+
 
 }

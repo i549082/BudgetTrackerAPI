@@ -12,4 +12,6 @@ public interface MoneyTransactionRepository {
     public MoneyTransaction GetTransactionByDescription(String description);
     public MoneyTransaction SaveTransaction(Long userId, BigDecimal amount, String description, TransactionType transactionType, AccountType accountType);
     public List<MoneyTransaction> GetTransactionsById(Long id);
+    List<MoneyTransaction> getAllTransactions();
+
 }

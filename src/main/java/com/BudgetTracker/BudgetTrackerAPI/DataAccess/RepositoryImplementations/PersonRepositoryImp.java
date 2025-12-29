@@ -43,6 +43,17 @@ public class PersonRepositoryImp implements PersonRepository { // TO DO: Add Exc
     }
 
     @Override
+    public List<Person> getAllPeople() {
+        List<PersonEntity> entities = personJpaRepository.findAll();
+
+        List<Person> people = new ArrayList<>();
+        for (PersonEntity entity : entities) {
+            people.add(mapToPersonModel(entity));
+        }
+        return people;
+    }
+
+    @Override
     public Person getPersonByEmail(String email ){
         PersonEntity personEntity = personJpaRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with email " + email));

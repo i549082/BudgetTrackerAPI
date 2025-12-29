@@ -11,5 +11,6 @@ public interface PersonJpaRepository extends JpaRepository<PersonEntity, Long> {
     boolean existsByUsername(String username);
     boolean existsByEmail(String email);
 
+
 }
 //move to DAL

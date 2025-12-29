@@ -16,6 +16,8 @@ import java.sql.Timestamp;
 public class MoneyTransaction {
     private Long  id;
     private Long  personId;
+    private String username;
+    private String email;
     private TransactionType transactionType;
     private AccountType accountType;
     private String description;
