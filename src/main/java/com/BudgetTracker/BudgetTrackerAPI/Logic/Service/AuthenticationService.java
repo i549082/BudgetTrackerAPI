@@ -3,7 +3,7 @@ package com.BudgetTracker.BudgetTrackerAPI.Logic.Service;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.DTOs.LoginDto;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.DTOs.RegisterDto;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.Role;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonRepository;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonService;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.DTOs.AuthenticationResponse;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.Person;
 import com.BudgetTracker.BudgetTrackerAPI.Security.JWT.JwtService;
@@ -16,13 +16,13 @@ import java.math.BigDecimal;
 
 @Service
 public class AuthenticationService {
-    private final PersonRepository personRepository;
+    private final PersonService personRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
 
-    public AuthenticationService(PersonRepository personRepository, PasswordEncoder passwordEncoder, JwtService jwtService,  AuthenticationManager authenticationManager) {
+    public AuthenticationService(PersonService personRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
         this.personRepository = personRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;

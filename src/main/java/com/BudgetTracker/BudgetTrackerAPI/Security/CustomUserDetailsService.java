@@ -1,6 +1,6 @@
 package com.BudgetTracker.BudgetTrackerAPI.Security;
 
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonRepository;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonService;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.Person;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final PersonRepository personRepository;
+    private final PersonService personRepository;
 
-    public CustomUserDetailsService(PersonRepository personRepository) {
+    public CustomUserDetailsService(PersonService personRepository) {
         this.personRepository = personRepository;
     }
 

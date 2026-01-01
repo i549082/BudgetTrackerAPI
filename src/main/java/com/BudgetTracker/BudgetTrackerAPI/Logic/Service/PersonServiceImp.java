@@ -1,7 +1,8 @@
 package com.BudgetTracker.BudgetTrackerAPI.Logic.Service;
 
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonRepository;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Service.PersonService;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.Role;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonService;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.Person;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +11,11 @@ import java.util.List;
 
 
 @Service
-public class PersonServiceImp implements PersonService { // NOTE: SUBSTRACT FROM USERS BALANCE NOT BIGDECIMAL.ZERO
+public class PersonServiceImp implements com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Service.PersonService { // NOTE: SUBSTRACT FROM USERS BALANCE NOT BIGDECIMAL.ZERO
 
-    private final PersonRepository personRepository;
+    private final PersonService personRepository;
 
-    public PersonServiceImp(PersonRepository personRepository) {
+    public PersonServiceImp(PersonService personRepository) {
         this.personRepository = personRepository;
     }
 
@@ -128,5 +129,15 @@ public class PersonServiceImp implements PersonService { // NOTE: SUBSTRACT FROM
         }
 
         return totalCashBalance;
+    }
+
+    @Override
+    public List<Person> getAllPeople(){
+        return  personRepository.getAllPeople();
+    }
+
+    @Override
+    public void updatePersonRole(Long userId, Role role){
+        personRepository.updatePersonRole(userId, role);
     }
 }

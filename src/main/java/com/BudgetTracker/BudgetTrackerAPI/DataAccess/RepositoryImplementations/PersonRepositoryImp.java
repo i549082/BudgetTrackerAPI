@@ -2,9 +2,10 @@ package com.BudgetTracker.BudgetTrackerAPI.DataAccess.RepositoryImplementations;
 
 import com.BudgetTracker.BudgetTrackerAPI.DataAccess.Entities.PersonEntity;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.AccountType;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.Role;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.TransactionType;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.MoneyTransactionRepository;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonRepository;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonService;
 import com.BudgetTracker.BudgetTrackerAPI.DataAccess.JPA.PersonJpaRepository;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.MoneyTransaction;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.Person;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PersonRepositoryImp implements PersonRepository { // TO DO: Add Exception Handling
+public class PersonRepositoryImp implements PersonService { // TO DO: Add Exception Handling
 
     private final PersonJpaRepository personJpaRepository;
     private final MoneyTransactionRepository moneyTransactionRepository;
@@ -70,6 +71,16 @@ public class PersonRepositoryImp implements PersonRepository { // TO DO: Add Exc
         PersonEntity savedEntity = personJpaRepository.save(personEntity);
         return mapToPersonModel(savedEntity);
     }
+
+    @Override
+    public void updatePersonRole(Long userId, Role role) {
+        PersonEntity person = personJpaRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        person.setRole(role);
+        personJpaRepository.save(person);
+    }
+
     @Override
     public boolean existsById(Long id){
         return personJpaRepository.existsById( id );

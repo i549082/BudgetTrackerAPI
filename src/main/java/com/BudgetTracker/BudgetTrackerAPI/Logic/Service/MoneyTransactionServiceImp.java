@@ -4,20 +4,21 @@ import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.AccountType;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.TransactionType;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Service.MoneyTransactionService;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.MoneyTransactionRepository;
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonRepository;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonService;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.MoneyTransaction;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class MoneyTransactionServiceImp implements MoneyTransactionService {
 
-    private final PersonRepository personRepository;
+    private final PersonService personRepository;
     private final MoneyTransactionRepository moneyTransactionRepository;
 
-    public MoneyTransactionServiceImp(PersonRepository personRepository, MoneyTransactionRepository moneyTransactionRepository) {
+    public MoneyTransactionServiceImp(PersonService personRepository, MoneyTransactionRepository moneyTransactionRepository) {
         this.personRepository = personRepository;
         this.moneyTransactionRepository = moneyTransactionRepository;
     }
@@ -51,5 +52,10 @@ public class MoneyTransactionServiceImp implements MoneyTransactionService {
         MoneyTransaction savedTransaction = moneyTransactionRepository.SaveTransaction(userId, amount, description, transactionType, accountType);
 
         return savedTransaction;
+    }
+
+    @Override
+    public List<MoneyTransaction> getAllTransactions(){
+       return moneyTransactionRepository.getAllTransactions();
     }
 }

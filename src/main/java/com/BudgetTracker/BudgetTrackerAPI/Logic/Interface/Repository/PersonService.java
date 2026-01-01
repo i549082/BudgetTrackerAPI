@@ -1,11 +1,12 @@
 package com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository;
 
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Enum.Role;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Models.Person;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface PersonRepository {
+public interface PersonService {
 
     Person getPersonById(Long id );
     Person getPersonByUsername(String username );
@@ -23,4 +24,6 @@ public interface PersonRepository {
     List<BigDecimal> getCashIncome(Long id);
     List<BigDecimal> getCashExpenses(Long id);
     Person savePerson(Person person);
+    void updatePersonRole(Long userId, Role role);
+
 }

@@ -1,8 +1,7 @@
 package com.BudgetTracker.BudgetTrackerService;
 
-import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonRepository;
+import com.BudgetTracker.BudgetTrackerAPI.Logic.Interface.Repository.PersonService;
 import com.BudgetTracker.BudgetTrackerAPI.Logic.Service.PersonServiceImp;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,7 +16,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class PersonServiceImpTests {
     @Mock
-    private PersonRepository personRepository; //mocked db interface
+    private PersonService personRepository; //mocked db interface
 
     @InjectMocks
     private PersonServiceImp personService;
