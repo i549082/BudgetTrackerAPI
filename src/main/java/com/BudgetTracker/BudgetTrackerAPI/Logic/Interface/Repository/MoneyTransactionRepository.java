@@ -8,10 +8,12 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface MoneyTransactionRepository {
-    public MoneyTransaction GetTransactionById (Long id);
-    public MoneyTransaction GetTransactionByDescription(String description);
-    public MoneyTransaction SaveTransaction(Long userId, BigDecimal amount, String description, TransactionType transactionType, AccountType accountType);
-    public List<MoneyTransaction> GetTransactionsById(Long id);
+    MoneyTransaction GetTransactionById (Long id);
+    MoneyTransaction GetTransactionByDescription(String description);
+    MoneyTransaction SaveTransaction(Long userId, BigDecimal amount, String description, TransactionType transactionType, AccountType accountType);
+    List<MoneyTransaction> GetTransactionsById(Long id);
     List<MoneyTransaction> getAllTransactions();
+    MoneyTransaction deleteTransaction(Long id);
+
 
 }

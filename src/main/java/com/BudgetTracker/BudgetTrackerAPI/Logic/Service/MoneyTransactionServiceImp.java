@@ -55,7 +55,36 @@ public class MoneyTransactionServiceImp implements MoneyTransactionService {
     }
 
     @Override
+    public MoneyTransaction deleteTransaction(Long id) {
+
+        MoneyTransaction deleted = moneyTransactionRepository.deleteTransaction(id);
+
+        var balance = personRepository.getPersonBalance(deleted.getPersonId());
+
+        if (deleted.getTransactionType() == TransactionType.INCOME) {
+            personRepository.updatePersonBalance(
+                    deleted.getPersonId(),
+                    balance.subtract(deleted.getAmount())
+            );
+        }
+
+        if (deleted.getTransactionType() == TransactionType.EXPENSE) {
+            personRepository.updatePersonBalance(
+                    deleted.getPersonId(),
+                    balance.add(deleted.getAmount())
+            );
+        }
+
+        return deleted;
+    }
+
+    @Override
     public List<MoneyTransaction> getAllTransactions(){
        return moneyTransactionRepository.getAllTransactions();
+    }
+
+    @Override
+    public List<MoneyTransaction> getTransactionsById(Long id){
+        return moneyTransactionRepository.GetTransactionsById(id);
     }
 }

@@ -11,11 +11,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:5173")
+
 public class MoneyTransactionController {
 
     private final MoneyTransactionService moneyTransactionService;
@@ -58,5 +62,20 @@ public class MoneyTransactionController {
         transactionsResponse.setAmount(createMoneyTransaction.getAmount());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionsResponse);
+    }
+
+    @GetMapping("/transactions/{userId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    public List<MoneyTransaction> getAllTransactions(@PathVariable Long userId) {
+        return moneyTransactionService.getTransactionsById(userId);
+    }
+
+    @DeleteMapping("/transactions/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    public ResponseEntity<Void> deleteTransaction(@PathVariable Long id) {
+
+        moneyTransactionService.deleteTransaction(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

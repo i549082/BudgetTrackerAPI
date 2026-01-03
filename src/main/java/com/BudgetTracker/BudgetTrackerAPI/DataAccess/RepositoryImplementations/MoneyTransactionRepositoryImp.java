@@ -66,6 +66,16 @@ public class MoneyTransactionRepositoryImp implements MoneyTransactionRepository
         return transactions;
     }
 
+    @Override
+    public MoneyTransaction deleteTransaction(Long id) {
+
+        MoneyTransactionEntity entity = transactionJpaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Transaction not found: " + id));
+
+        transactionJpaRepository.delete(entity);
+
+        return MapToTransactionModel(entity);
+    }
 
     @Override
     public MoneyTransaction SaveTransaction(Long userId, BigDecimal amount, String description, TransactionType transactionType, AccountType accountType) {
